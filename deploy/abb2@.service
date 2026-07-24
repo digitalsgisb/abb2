@@ -1,0 +1,25 @@
+[Unit]
+Description=ABB 2 Production Tracker
+Documentation=https://github.com/digitalsgisb/abb2
+Wants=network-online.target
+After=network-online.target mosquitto.service
+StartLimitIntervalSec=60
+StartLimitBurst=5
+
+[Service]
+Type=simple
+User=%i
+WorkingDirectory=/home/%i/abb2
+Environment=PYTHONUNBUFFERED=1
+Environment=ABB2_API_ENABLED=false
+EnvironmentFile=-/home/%i/abb2/.env
+ExecStart=/home/%i/abb2/.venv/bin/python -u /home/%i/abb2/abb2.py
+Restart=always
+RestartSec=5
+KillSignal=SIGINT
+TimeoutStopSec=30
+NoNewPrivileges=true
+UMask=0027
+
+[Install]
+WantedBy=multi-user.target
