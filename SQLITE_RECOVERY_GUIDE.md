@@ -55,7 +55,7 @@ The Raspberry Pi environment settings will be:
 
 ```text
 ABB2_API_ENABLED=true
-ABB2_API_EVENTS_URL=http://AI-ATOM-IP:3000/api/v1/events
+ABB2_API_EVENTS_URL=http://172.19.3.72:8088/api/v1/events
 ABB2_API_KEY=replace-with-a-private-key
 ```
 
