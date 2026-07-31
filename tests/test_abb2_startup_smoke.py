@@ -4,6 +4,7 @@ import sys
 import tempfile
 import types
 import unittest
+from datetime import datetime, timedelta
 
 
 ABB2_DIRECTORY = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -54,14 +55,15 @@ class ABB2StartupSmokeTest(unittest.TestCase):
     def test_script_restores_saved_counter_before_main_loop(self):
         with tempfile.TemporaryDirectory() as temporary_directory:
             database_path = os.path.join(temporary_directory, "abb2-smoke.db")
+            production_date = (datetime.now() - timedelta(hours=8)).date()
             store = ABB2SQLiteStore(database_path)
             store.save_runtime_state(
                 "ABB2",
                 {
                     "current_shift": {
-                        "shift_id": "20260722-Day-Line1",
+                        "shift_id": f"{production_date:%Y%m%d}-Day-Line1",
                         "line": "Line 1",
-                        "date": "2026-07-22",
+                        "date": production_date.isoformat(),
                         "shift": "Day",
                         "model": "TEST-MODEL",
                         "lot_number": "TEST-LOT",
